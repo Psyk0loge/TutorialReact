@@ -1,55 +1,27 @@
-## Fireship
+# React + TypeScript + Vite
 
-The [Fireship PRO](https://fireship.io) course platform frontend built with Svelte, Tailwind, Hugo, Firebase, & Flamethrower. 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Contributing
+Currently, two official plugins are available:
 
-All static content is managed with Hugo in the `content` dir. You can easily fix typos by modifying the markdown directly in GitHub. 
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-### How to Run it
+## Expanding the ESLint configuration
 
-First, install [Hugo Extended](https://gohugo.io/getting-started/installing/) ver `0.101.0` or greater. 
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-```
-git clone <this-repo>
-npm install
-npm start
-```
+- Configure the top-level `parserOptions` property like this:
 
-Check it on on `http://localhost:6969/`.
-
-
-## Developing Components 
-
-Create a Svelte file in the `app/components` directory. It must have a custom element tag. 
-
-```svelte
-<svelte:options tag="hi-mom" />
-
-<script>
-    export let greeting: string;
-</script>
-
-<h1>Hi Mom! {greeting}</h1> 
+```js
+   parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
 ```
 
-Export the component from `app/main.ts`:
-
-```ts
-export * from './components/hi-mom.svelte';
-```
-
-Now use it in anywhere in your HTML or Markdown. 
-
-```html
-<hi-mom greeting="i made a web component"></hi-mom>
-```
-
-**Note:** A weird caveat with Svelte web components is that all styles must be encapsulated. You can use Tailwind, BUT only with `@apply` in the component. Global styles will not work.
-
-## Commands
-
-- `npm start`: Main dev server. Runs everything you need. 
-- `npm run dev`: Runs components in isolation. Serves `app/index.html` as a playground for components. 
-- `npm run hugo`: Only runs static site. 
-- `npm run build`: Build for production
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
