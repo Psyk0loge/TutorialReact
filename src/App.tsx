@@ -4,15 +4,15 @@ import { FormEventHandler, useState } from "react";
 export default function App() {
   //is sth called a hook
   const [newItem, setNewItem] = useState("");
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState<Todo[]>([])
   //state is the magic how react works so well
   //states are immutable so I can not change them
   //doing a new state will reload everything...
   // setNewItem("sdf")
-  interface Todo {
-    id: string;
-    title: number;
-    completed: boolean;
+  interface Todo{
+    id: string,
+    title: string,
+    completed: boolean
   }
 
   //Todo: change this away from any
@@ -21,14 +21,14 @@ export default function App() {
 
     //somehow there is a difference between passing a state in a funciton that sth
     //else…. check in video at https://www.youtube.com/watch?v=Rh3tobg7hEo&t=1320s
-    setTodos( (currentTodos: any[])  => {
-      return [
-        ...currentTodos,
-        {
-          id: crypto.randomUUID(), title: newItem, completed: false
-        },
-      ]
-    })
+    setTodos( ()  => [
+      ...todos,
+      {
+        id: crypto.randomUUID(), title: newItem, completed: false
+      },
+    ]);
+  
+    // })
 
     //with spreading out and than creating another element 
     //we can "add" sth to this array eventhough it is immutable
